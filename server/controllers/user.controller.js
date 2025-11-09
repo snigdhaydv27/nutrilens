@@ -56,7 +56,7 @@ export const generateAccessAndRefreshToken = async (userId) => {
 
 export const registerUser = asyncHandler(async (req, res, next) => {
     // console.log(req.body);
-    const { fullName, email, username, password } = req.body;
+    const { fullName, email, username, password, role } = req.body;
     // console.log(`email: ${email}`);
 
     if (
@@ -76,6 +76,7 @@ export const registerUser = asyncHandler(async (req, res, next) => {
     const user = await User.create({
         fullName,
         email,
+        role: role || 'user',
         username: username.toLowerCase(),
         password
     });
