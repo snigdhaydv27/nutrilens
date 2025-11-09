@@ -1,10 +1,12 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { ThemeContext } from "@/context/ThemeContext";
 import Sidebar from "@/components/Sidebar";
 import Image from "next/image";
 import { ChevronDown, ChevronUp, X } from "lucide-react";
 
 export default function HomePage() {
+  const { theme } = useContext(ThemeContext);
   const images = [
     "/images/slide1.jpg",
     "/images/slide2.jpg",
@@ -70,8 +72,17 @@ export default function HomePage() {
     console.log("Selected category value:", value);
   };
 
+  // Theme-based classes
+  const bg = theme === "dark"
+    ? "bg-gradient-to-b from-black via-gray-900 to-gray-800"
+    : "bg-gray-100";
+  const cardBg = theme === "dark" ? "bg-black" : "bg-white";
+  const cardText = theme === "dark" ? "text-white" : "text-gray-800";
+  const subText = theme === "dark" ? "text-gray-300" : "text-gray-700";
+  const buttonText = theme === "dark" ? "text-blue-400 hover:text-blue-200" : "text-blue-600 hover:text-blue-800";
+
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className={`${bg} min-h-screen transition-colors duration-300`}>
       <Sidebar />
 
       <main className="md:ml-64 p-8 min-h-screen overflow-y-auto relative">
@@ -90,7 +101,7 @@ export default function HomePage() {
         </div>
 
         {/* Top Categories */}
-        <h1 className="text-3xl font-bold mb-6 text-gray-800">Top Categories</h1>
+        <h1 className={`text-3xl font-bold mb-6 ${cardText}`}>Top Categories</h1>
 
         <div
           className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pb-12 transition-all duration-500 ${
@@ -101,13 +112,13 @@ export default function HomePage() {
             <div
               key={index}
               onClick={() => handleCategoryClick(cat.value)}
-              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-105 transition-transform duration-300 cursor-pointer"
+              className={`${cardBg} rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-105 transition-transform duration-300 cursor-pointer`}
             >
               <div className="relative w-full h-40">
                 <Image src={cat.img} alt={cat.name} fill className="object-cover" />
               </div>
               <div className="p-4 text-center">
-                <h2 className="text-lg font-semibold text-gray-800">{cat.name}</h2>
+                <h2 className={`text-lg font-semibold ${cardText}`}>{cat.name}</h2>
               </div>
             </div>
           ))}
@@ -117,7 +128,7 @@ export default function HomePage() {
         <div className="flex justify-center mt-4 mb-10">
           <button
             onClick={() => setShowAll(!showAll)}
-            className="flex items-center gap-2 text-blue-600 hover:text-blue-800 font-semibold transition-colors cursor-pointer"
+            className={`flex items-center gap-2 font-semibold transition-colors cursor-pointer ${buttonText}`}
           >
             {showAll ? (
               <>
@@ -132,11 +143,11 @@ export default function HomePage() {
         </div>
 
         {/* 📰 Latest News Section */}
-        <section className="bg-white rounded-xl shadow-md p-6 mb-12">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Latest News</h2>
+        <section className={`${cardBg} rounded-xl shadow-md p-6 mb-12`}>
+          <h2 className={`text-2xl font-bold mb-4 ${cardText}`}>Latest News</h2>
 
           {!news ? (
-            <p className="text-gray-500 italic">Fetching latest health news...</p>
+            <p className={`${subText} italic`}>Fetching latest health news...</p>
           ) : (
             <div className="flex flex-col sm:flex-row items-center gap-6">
               {news.image && (
@@ -145,11 +156,11 @@ export default function HomePage() {
                 </div>
               )}
               <div className="sm:w-2/3">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">{news.title}</h3>
-                <p className="text-gray-700 mb-3">{news.description}</p>
+                <h3 className={`text-xl font-semibold mb-2 ${cardText}`}>{news.title}</h3>
+                <p className={`${subText} mb-3`}>{news.description}</p>
                 <button
                   onClick={() => setShowModal(true)}
-                  className="text-blue-600 hover:text-blue-800 font-medium cursor-pointer"
+                  className={`font-medium cursor-pointer ${buttonText}`}
                 >
                   Read Full Article →
                 </button>
@@ -175,7 +186,7 @@ export default function HomePage() {
             onClick={() => setShowModal(false)}
           >
             <div
-              className="bg-white rounded-xl shadow-xl w-11/12 md:w-2/3 lg:w-1/2 p-6 relative animate-fadeIn"
+              className={`${cardBg} rounded-xl shadow-xl w-11/12 md:w-2/3 lg:w-1/2 p-6 relative animate-fadeIn`}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close button */}
@@ -187,7 +198,7 @@ export default function HomePage() {
               </button>
 
               {/* Article content */}
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">{news.title}</h2>
+              <h2 className={`text-2xl font-bold mb-4 ${cardText}`}>{news.title}</h2>
 
               {news.image && (
                 <div className="relative w-full h-52 mb-4 rounded-xl overflow-hidden">
@@ -195,7 +206,7 @@ export default function HomePage() {
                 </div>
               )}
 
-              <p className="text-gray-700 whitespace-pre-line leading-relaxed">
+              <p className={`${subText} whitespace-pre-line leading-relaxed`}>
                 {news.content}
               </p>
             </div>
