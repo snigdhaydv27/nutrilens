@@ -2,9 +2,16 @@
 import React, { useState } from "react";
 import { FaBars, FaTimes, FaUser } from "react-icons/fa";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Don't render on category pages
+  if (pathname.startsWith('/category/')) {
+    return null;
+  }
 
   const menuItems = [
     { name: "Home", path: "/" },
