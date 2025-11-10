@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import Sidebar from "@/components/Sidebar";
 import Link from "next/link";
 
 export default function CategoryPage() {
@@ -98,7 +97,7 @@ export default function CategoryPage() {
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Category Sidebar */}
+      {/* Category Sidebar - Keep this one */}
       <div className="hidden md:flex w-64 flex-col fixed h-screen bg-white shadow-lg">
         <div className="p-6">
           <h2 className="text-xl font-bold mb-4">Categories</h2>
