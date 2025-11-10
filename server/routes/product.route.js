@@ -24,5 +24,5 @@ router.route("/update-product/:productId").patch(
 
 router.get("/get-products", getAllProducts);
 
-router.route("/:productId").post(getProductById);
+router.route("/:productId").get(getProductById);
 export default router;
