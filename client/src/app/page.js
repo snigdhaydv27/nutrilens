@@ -6,8 +6,11 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ChevronDown, ChevronUp, X } from "lucide-react";
 
+
+
+
 export default function HomePage() {
-  const { theme } = useContext(ThemeContext);
+  const { theme , toggleTheme } = useContext(ThemeContext);
   const images = [
     "/images/slide1.jpg",
     "/images/slide2.jpg",
@@ -87,6 +90,105 @@ export default function HomePage() {
   return (
     <div className={`${bg} min-h-screen transition-colors duration-300`}>
       <Sidebar />
+
+      {/* Search + Theme Toggle */}
+<div className="flex items-center justify-center gap-8 mt-8 mb-12 w-full">
+
+  {/* Frosted Glass Search Bar */}
+  <div className="relative w-full max-w-lg ">
+    <input
+      type="text"
+      placeholder="Search products..."
+      className="
+        w-full px-5 py-3 pl-5 pr-14
+        rounded-full 
+        bg-white/20 dark:bg-gray-700/20
+        backdrop-blur-md 
+        text-gray-900 dark:text-gray-100
+        shadow-lg shadow-black/10 dark:shadow-white/5
+        border border-white/30 dark:border-gray-500/30
+        focus:outline-none focus:ring-2 focus:ring-blue-400/60
+        placeholder-gray-500 dark:placeholder-gray-300
+        transition
+      "
+    />
+
+    {/* Search Icon Button */}
+    <button
+      className="
+        absolute right-3 top-1/2 -translate-y-1/2
+        rounded-full p-2
+        bg-blue-500 hover:bg-blue-600
+        text-white transition transform hover:scale-105 shadow-md
+      "
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
+      </svg>
+    </button>
+  </div>
+
+  {/* Animated Theme Toggle */}
+  <div
+    onClick={toggleTheme}
+    className="flex items-center gap-3 cursor-pointer select-none "
+  >
+    {/* Modern Sun */}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={`h-5 w-5 transition-all duration-300 ${
+        theme === "dark" ? "opacity-40 scale-90" : "opacity-100 scale-110 text-yellow-400"
+      }`}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
+      <circle cx="12" cy="12" r="5" />
+      <path d="M12 1v2M12 21v2M4.22 4.22l1.41 1.41M18.36 18.36l1.41 1.41M1 12h2M21 12h2M4.22 19.78l1.41-1.41M18.36 5.64l1.41-1.41" />
+    </svg>
+
+    {/* Animated Slider */}
+    <div className="relative w-12 h-6 bg-gray-300 dark:bg-gray-600 rounded-full">
+      <div
+        className={`
+          absolute top-0.5 
+          w-5 h-5 rounded-full shadow-md 
+          transition-all duration-300 ease-out 
+          ${theme === "dark" 
+            ? "right-0.5 bg-gray-900 scale-105" 
+            : "left-0.5 bg-white scale-100"
+          }
+        `}
+      ></div>
+    </div>
+
+    {/* Modern Moon */}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={`h-5 w-5 transition-all duration-300 ${
+        theme === "dark" ? "opacity-100 scale-110 text-blue-300" : "opacity-40 scale-90"
+      }`}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
+      <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+    </svg>
+  </div>
+
+</div>
+
+
+
+
 
       <main className="md:ml-64 p-8 min-h-screen overflow-y-auto relative">
         {/* Auto Image Slider */}
