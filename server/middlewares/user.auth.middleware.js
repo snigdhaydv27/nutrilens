@@ -1,4 +1,4 @@
-import { getUserById } from "../controllers/user.controller.js";
+import { getUserDetailsById } from "../controllers/user.controller.js";
 import ApiError from "../utils/ApiError.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
@@ -12,7 +12,7 @@ export const authenticateUser = asyncHandler(async (req, res, next) => {
         }
         const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
-        const user = await getUserById(decodedToken?._id);
+        const user = await getUserDetailsById(decodedToken?._id);
 
         if (!user) {
             throw new ApiError(401, "Unauthorized: User not found");
@@ -21,6 +21,6 @@ export const authenticateUser = asyncHandler(async (req, res, next) => {
         req.user = user;
         next();
     } catch (error) {
-        throw new ApiError(401, "Unauthorized: Invalid or expired token");
+        throw new ApiError(401, error.message || "Unauthorized: Invalid or expired token");
     }
 });

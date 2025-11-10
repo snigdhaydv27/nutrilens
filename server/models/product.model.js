@@ -7,12 +7,21 @@ const productSchema = new Schema(
             required: true,
             trim: true,
         },
+        isApproved: {
+            type: Boolean,
+            default: false,
+        },
+        description: {
+            type: String,
+            required: true,
+            trim: true,
+        },
         category: {
             type: String,
             required: true,
             enum: ['biscuits', 'breakfast and spreads', 'chocolates and desserts', 'cold drinks and juices', 'dairy, bread and eggs', 'instant foods', 'snacks', 'cakes and bakes', 'dry fruits, oil and masalas', 'meat', 'rice, atta and dals', 'tea, coffee and more', 'supplements and mores'],
         },
-        productid: {
+        productId: {
             type: Number,
             required: true,
             unique: true,
@@ -71,7 +80,7 @@ const productSchema = new Schema(
         },
         tags: [{
             type: String,
-            enum: ['vegan', 'gluten-free', 'sugar-free', 'low-fat', 'organic', 'non-GMO', 'high-protein', 'keto-friendly', 'paleo-friendly', 'dairy-free', 'nut-free', 'soy-free'],
+            enum: ['vegan', 'vegetarian', 'gluten-free', 'sugar-free', 'low-fat', 'organic', 'non-GMO', 'high-protein', 'keto-friendly', 'paleo-friendly', 'dairy-free', 'nut-free', 'soy-free'],
         }]
     }, { timestamps: true }
 );

@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import { ThemeContext } from "@/context/ThemeContext";
 import Sidebar from "@/components/Sidebar";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { ChevronDown, ChevronUp, X } from "lucide-react";
 
 export default function HomePage() {
@@ -15,18 +16,18 @@ export default function HomePage() {
 
   const categories = [
     { name: "Biscuits", value: "biscuits", img: "/images/biscuit.jpg" },
-    { name: "Breakfast & Spreads", value: "breakfast and spreads", img: "/images/bread.jpg" },
-    { name: "Chocolates & Desserts", value: "chocolates and desserts", img: "/images/chocolate.jpg" },
-    { name: "Cold Drinks & Juices", value: "cold drinks and juices", img: "/images/colddrinks.jpg" },
-    { name: "Dairy, Bread & Eggs", value: "dairy, bread and eggs", img: "/images/dairy.jpg" },
-    { name: "Instant Foods", value: "instant foods", img: "/images/instant.jpg" },
+    { name: "Breakfast & Spreads", value: "breakfast-and-spreads", img: "/images/bread.jpg" },
+    { name: "Chocolates & Desserts", value: "chocolates-and-desserts", img: "/images/chocolate.jpg" },
+    { name: "Cold Drinks & Juices", value: "cold-drinks-and-juices", img: "/images/colddrinks.jpg" },
+    { name: "Dairy, Bread & Eggs", value: "dairy-bread-and-eggs", img: "/images/dairy.jpg" },
+    { name: "Instant Foods", value: "instant-foods", img: "/images/instant.jpg" },
     { name: "Snacks", value: "snacks", img: "/images/snacks.jpg" },
-    { name: "Cakes & Bakes", value: "cakes and bakes", img: "/images/bread.jpg" },
-    { name: "Dry Fruits, Oil & Masalas", value: "dry fruits, oil and masalas", img: "/images/dryfruits.jpg" },
+    { name: "Cakes & Bakes", value: "cakes-and-bakes", img: "/images/bread.jpg" },
+    { name: "Dry Fruits, Oil & Masalas", value: "dry-fruits-oil-and-masalas", img: "/images/dryfruits.jpg" },
     { name: "Meat", value: "meat", img: "/images/meat.jpg" },
-    { name: "Rice, Atta & Dals", value: "rice, atta and dals", img: "/images/rice.jpg" },
-    { name: "Tea, Coffee & More", value: "tea, coffee and more", img: "/images/coffee.jpg" },
-    { name: "Supplements & Mores", value: "supplements and mores", img: "/images/protein.jpg" },
+    { name: "Rice, Atta & Dals", value: "rice-atta-and-dals", img: "/images/rice.jpg" },
+    { name: "Tea, Coffee & More", value: "tea-coffee-and-more", img: "/images/coffee.jpg" },
+    { name: "Supplements & Mores", value: "supplements-and-mores", img: "/images/protein.jpg" },
   ];
 
   const [current, setCurrent] = useState(0);
@@ -68,8 +69,10 @@ export default function HomePage() {
 
   const displayedCategories = showAll ? categories : categories.slice(0, 4);
 
+  const router = useRouter();
+  
   const handleCategoryClick = (value) => {
-    console.log("Selected category value:", value);
+    router.push(`/category/${value}`);
   };
 
   // Theme-based classes
@@ -140,6 +143,26 @@ export default function HomePage() {
               </>
             )}
           </button>
+        </div>
+
+        {/* Categories Grid - Updated Layout */}
+        <h1 className="text-3xl font-bold mb-6 text-gray-800">Browse Categories</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+          {categories.map((cat, index) => (
+            <div
+              key={index}
+              onClick={() => handleCategoryClick(cat.value)}
+              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:scale-105 transition-transform duration-300 cursor-pointer"
+            >
+              <div className="relative w-full h-48">
+                <Image src={cat.img} alt={cat.name} fill className="object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <h2 className="absolute bottom-4 left-4 text-xl font-semibold text-white">
+                  {cat.name}
+                </h2>
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* 📰 Latest News Section */}

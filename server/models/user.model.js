@@ -88,7 +88,7 @@ const userSchema = new Schema(
         }],
         accountStatus: {
             type: String,
-            enum: ['approved', 'banned', 'pending'],
+            enum: ['approved', 'verified', 'banned', 'pending'],
             default: 'pending',
         }
     }, { timestamps: true, });

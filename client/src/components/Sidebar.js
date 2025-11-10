@@ -2,12 +2,19 @@
 import React, { useState, useContext } from "react";
 import { FaBars, FaTimes, FaUser, FaMoon, FaSun } from "react-icons/fa";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { ThemeContext } from "../context/ThemeContext"; // To be created
 
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Don't render on category pages
+  if (pathname.startsWith('/category/')) {
+    return null;
+  }
   const [search, setSearch] = useState("");
   const { theme, toggleTheme } = useContext(ThemeContext);
 

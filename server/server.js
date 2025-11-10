@@ -22,11 +22,12 @@ app.use(cookieParser());
 
 import healthCheckRoutes from "./routes/healthCheck.route.js";
 import userRoutes from "./routes/user.route.js";
+import productRoutes from "./routes/product.route.js";
 
 // route declarations
 app.use("/api/v1/health", healthCheckRoutes);
 app.use("/api/v1/user", userRoutes);
-
+app.use("/api/v1/product", productRoutes); 
 
 connectDB().then(() => {
     app.listen(PORT, () => {
