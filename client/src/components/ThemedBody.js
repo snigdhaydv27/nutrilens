@@ -1,7 +1,6 @@
 "use client";
 import React, { useContext } from "react";
 import Navbar from "./Sidebar";
-import Footer from "./Footer";
 import { ThemeContext } from "../context/ThemeContext";
 
 export default function ThemedBody({ children }) {

@@ -62,14 +62,14 @@ const Sidebar = () => {
       >
         <div className="flex flex-col h-full">
           {/* Logo */}
-          <div className="flex items-center justify-center h-24 border-b border-gray-300 dark:border-gray-700">
+          <div className="flex items-center justify-center h-16 border-b border-gray-300 dark:border-gray-700">
             <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
               LOGO
             </h1>
           </div>
 
           {/* Menu */}
-          <nav className="mt-6 px-4">
+          <nav className="mt-4 px-4">
             <ul className="flex flex-col space-y-2">
               {menuItems.map((item) => (
                 <li key={item.name}>
@@ -85,13 +85,13 @@ const Sidebar = () => {
             </ul>
           </nav>
 
-           {/* Categories Dropdown */}
+          {/* Categories Dropdown */}
           <div className="px-4 mt-2">
             <button
               onClick={() => setCatsOpen(!catsOpen)}
               className="w-full flex items-center justify-between px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition"
             >
-              <span className= "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition">
+              <span className="text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition">
                 Categories
               </span>
               <span className="text-gray-500 dark:text-gray-300">
@@ -100,17 +100,16 @@ const Sidebar = () => {
             </button>
 
             {catsOpen && (
-              <ul className="mt-2 max-h-56 overflow-auto space-y-1">
+              <ul className="mt-2 max-h-36 overflow-auto space-y-1">
                 {categories.map((cat) => (
                   <li key={cat.value}>
                     <Link
                       href={`/category/${cat.value}`}
                       onClick={() => setIsOpen(false)}
-                      className={`block px-3 py-2 rounded-md text-sm transition ${
-                        isActiveCategory(cat.value)
-                          ? "bg-blue-100 text-black"
-                          : "text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800"
-                      }`}
+                      className={`block px-3 py-2 rounded-md text-sm transition ${isActiveCategory(cat.value)
+                        ? "bg-blue-100 text-black"
+                        : "text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800"
+                        }`}
                     >
                       {cat.name}
                     </Link>
@@ -121,18 +120,20 @@ const Sidebar = () => {
           </div>
 
           {/* Spacer pushes remaining items to bottom */}
-          <div className="flex-grow" />
+          <div className="grow" />
 
           {/* Login/Register */}
-          <div className="px-4 mb-4">
-            <button
-              className={`w-full py-2 rounded-lg font-semibold transition
+          <div className="px-4 mb-4 mx-auto">
+            <Link
+              href="/auth/signup"
+              onClick={() => setIsOpen(false)}
+              className={`w-full py-2 px-4 rounded-lg font-semibold transition
                 ${theme === "dark"
                   ? "bg-white text-black hover:bg-gray-200"
                   : "bg-black text-white hover:bg-gray-900"}`}
             >
-              Login/Signup
-            </button>
+              Login / Signup
+            </Link>
           </div>
 
           {/* Divider */}
