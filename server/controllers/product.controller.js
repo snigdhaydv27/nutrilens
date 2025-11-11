@@ -205,20 +205,32 @@ export const updateProductDetails = asyncHandler(async (req, res, next) => {
         tags,
     } = req.body;
 
+    const safeParse = (value, fieldName) => {
+        if (value === undefined) return undefined;
+        if (typeof value === 'string') {
+            try {
+                return JSON.parse(value);
+            } catch (err) {
+                throw new ApiError(400, `Invalid JSON for field '${fieldName}'`);
+            }
+        }
+        return value;
+    };
+
     const updatedProduct = await Product.findByIdAndUpdate(
         product._id,
         {
             $set: {
-                name: name || product.name,
-                description: description || product.description,
-                category: category || product.category,
-                nutritionalInfo: nutritionalInfo ? JSON.parse(nutritionalInfo) : product.nutritionalInfo,
-                diseases: diseases ? JSON.parse(diseases) : product.diseases,
-                certifications: certifications ? JSON.parse(certifications) : product.certifications,
-                alternatives: alternatives ? JSON.parse(alternatives) : product.alternatives,
-                ingredients: ingredients ? JSON.parse(ingredients) : product.ingredients,
-                price: price || product.price,
-                tags: tags ? JSON.parse(tags) : product.tags,
+                name: name ?? product.name,
+                description: description ?? product.description,
+                category: category ?? product.category,
+                nutritionalInfo: safeParse(nutritionalInfo, 'nutritionalInfo') ?? product.nutritionalInfo,
+                diseases: safeParse(diseases, 'diseases') ?? product.diseases,
+                certifications: safeParse(certifications, 'certifications') ?? product.certifications,
+                alternatives: safeParse(alternatives, 'alternatives') ?? product.alternatives,
+                ingredients: safeParse(ingredients, 'ingredients') ?? product.ingredients,
+                price: price ?? product.price,
+                tags: safeParse(tags, 'tags') ?? product.tags,
             }
         },
         { new: true }
